@@ -7,9 +7,11 @@ import Table from '../components/Table';
 function Clients() {
 
     return (
-        <Table/>
+        <section className='flex justify-center'>
+            <Table />
+        </section>
     )
- 
+
 }
 
 export default Clients

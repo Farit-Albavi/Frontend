@@ -2,7 +2,12 @@ import React from 'react'
 import { useContext, useState, useEffect } from 'react'
 import { DataContext } from '../context/DataContext'
 
+
+
 function Table() {
+
+
+    const { refreshList } = useContext(DataContext)
 
     const { users, deleteButton, renovarSuscripcion } = useContext(DataContext)
 
@@ -20,11 +25,18 @@ function Table() {
     }, [searchTerm, users]);
 
     return (
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg px-10 w-[940px] bg-gray-800 p-2">
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg px-10 w-full lg:w-[940px] bg-gray-800 p-2">
 
             {/* Buscar elemento */}
-            <div className='flex justify-end my-2'>
-                <div className="relative">
+            <div className='flex justify-between pb-5 pt-2'>
+                <button className='flex gap-2 bg-gray-700 text-gray-400 hover:bg-gray-700/80 p-2 rounded-xl px-5' onClick={refreshList}>
+                    <svg class="w-6 h-6 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M16 1v5h-5M2 19v-5h5m10-4a8 8 0 0 1-14.947 3.97M1 10a8 8 0 0 1 14.947-3.97" />
+                    </svg>
+                    <span>Refrescar</span>
+                </button>
+
+                <div className="relative flex">
                     <div className="absolute inset-y-0 left-0 rtl:inset-r-0 rtl:right-0 flex items-center ps-3 pointer-events-none">
                         <svg className="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
                     </div>
