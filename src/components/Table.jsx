@@ -12,16 +12,18 @@ function Table() {
     //Data
     const { users, deleteButton, renovarSuscripcion } = useContext(DataContext)
 
+
+    //filtrado 
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filteredUsers, setFilteredUsers] = useState(users);
+
     //cantidad total de paginas
-    const cantidadTotalPaginas = Math.ceil(users.length / 10);
+    const cantidadTotalPaginas = Math.ceil(filteredUsers.length / 10);
 
     //paginacion
     const [currentPage, setCurrentPage] = useState(1);
     const usersPerPage = 10;
 
-    //filtrado 
-    const [searchTerm, setSearchTerm] = useState('');
-    const [filteredUsers, setFilteredUsers] = useState(users);
 
 
 
@@ -134,7 +136,7 @@ function Table() {
                     </button>
                     <button
                         onClick={() => handlePageChange(currentPage + 1)}
-                        disabled={currentPage === cantidadTotalPaginas}
+                        disabled={currentPage === cantidadTotalPaginas || cantidadTotalPaginas === 0}
                         className={`hover:underline hover:underline-offset-4 py-1 rounded-md ${currentPage === cantidadTotalPaginas ? 'cursor-not-allowed text-gray-500' : ''}`}
                     >
                         Siguiente
