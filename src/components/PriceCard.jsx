@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import { useState } from 'react'
 
 function PriceCard() {
 
@@ -15,7 +15,7 @@ function PriceCard() {
     }
 
     return (
-        <div className='bg-[#192655] rounded-xl text-center'>
+        <div className='bg-[#192655] rounded-xl text-center w-80 '>
 
             <div className='mb-2 pt-5'>
                 <button className='bg-[#e74c3c] hover:bg-[#e74c3c]/90 rounded-l-lg w-32 py-3' onClick={onMonthly}>Mensual</button>
@@ -35,7 +35,13 @@ function PriceCard() {
                         : '¡Todo un sistema de gestion para tus suscripciones por el precio de una suscripcion de gimnasio!'}
                 </p>
             </div>
-        </div>)
+            <button className='bg-red-500 hover:bg-red-500/90 p-2 my-4 rounded-xl'>
+                {isAnual ? 'Adquirir servicio anual' : 'Adquirir servicio mensual'}
+            </button>
+
+
+        </div>
+    )
 }
 
 export default PriceCard
