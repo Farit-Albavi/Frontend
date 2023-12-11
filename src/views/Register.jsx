@@ -58,7 +58,7 @@ function Register() {
     return (
         <section className='flex justify-center items-center h-screen'>
 
-            <form className='mt-10 bg-slate-800 p-10 rounded-xl w-96' onSubmit={postClients}>
+            <form className='mt-10 bg-[#192655] p-10 rounded-xl w-96' onSubmit={postClients}>
 
                 <div className="relative z-0 w-full mb-6 group">
                     <input onChange={eventHandlerName} type="text" name="floating_first_name" id="floating_first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />

@@ -3,6 +3,7 @@ import Sidebar from '../components/Sidebar'
 import { Routes, Route } from 'react-router-dom'
 import Clients from '../views/Clients'
 import Register from '../views/Register'
+import Index from '../views/Index'
 
 
 function Home2() {
@@ -13,6 +14,7 @@ function Home2() {
             <Routes>
                 <Route path='/' element={<Clients />} />
                 <Route path='/register' element={<Register />} />
+                <Route path='/index' element={<Index />} />
             </Routes>
         </main>
 

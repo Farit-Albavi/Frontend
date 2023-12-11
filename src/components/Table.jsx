@@ -6,26 +6,53 @@ import { DataContext } from '../context/DataContext'
 
 function Table() {
 
-
+    //funcion para actualizac tabla
     const { refreshList } = useContext(DataContext)
 
+    //Data
     const { users, deleteButton, renovarSuscripcion } = useContext(DataContext)
 
+    //cantidad total de paginas
     const cantidadTotalPaginas = Math.ceil(users.length / 10);
 
+    //paginacion
+    const [currentPage, setCurrentPage] = useState(1);
+    const usersPerPage = 10;
+
+    //filtrado 
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredUsers, setFilteredUsers] = useState(users);
 
+
+
+    // Filtra la lista de usuarios basándose en el término de búsqueda
     useEffect(() => {
-        // Filtra la lista de usuarios basándose en el término de búsqueda
         const filteredResults = users.filter((user) =>
             user.nombre.toLowerCase().includes(searchTerm.toLowerCase())
         )
+        setCurrentPage(1);
         setFilteredUsers(filteredResults);
     }, [searchTerm, users]);
 
+
+    // Pagina la lista de usuarios
+    const indexOfLastUser = currentPage * usersPerPage;
+    const indexOfFirstUser = indexOfLastUser - usersPerPage;
+    const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+
+
+    // Cambia de página
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    useEffect(() => {
+        // Reinicia la página actual cuando se realiza una nueva búsqueda
+        setCurrentPage(1);
+    }, [searchTerm]);
+
     return (
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg px-10 w-full lg:w-[940px] bg-gray-800 p-2">
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg px-10 w-full lg:w-[940px] bg-[#192655] p-2">
 
             {/* Buscar elemento */}
             <div className='flex justify-between pb-5 pt-2'>
@@ -45,9 +72,10 @@ function Table() {
                 </div>
             </div>
 
-            {/* Contenido */}
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400  ">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+
+                {/* Cabecera */}
+                <thead className="text-xs text-gray-700 uppercase bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" className="px-6 py-3">
                             Nombre
@@ -64,15 +92,15 @@ function Table() {
                     </tr>
                 </thead>
 
-
+                {/* Contenido */}
                 <tbody >
-                    {filteredUsers.slice().sort((a, b) => {
+                    {currentUsers.slice().sort((a, b) => {
                         const fechaA = new Date(a.fecha_registro);
                         const fechaB = new Date(b.fecha_registro);
                         return fechaA - fechaB;
                     }).map((user, index) => (
-                        <tr key={index} className=" border-b bg-gray-800 border-gray-700">
-                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <tr key={index} className=" border-b bg-[#192655] border-gray-700">
+                            <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap text-white">
                                 {user.nombre}
                             </th>
                             <td className="px-6 py-4">
@@ -91,13 +119,26 @@ function Table() {
                 </tbody>
             </table>
 
+            {/* Paginación */}
             <div className='w-full flex items-center justify-between text-white my-2 '>
                 <div className='mx-5'>
-                    1 de 2 páginas
+                    {`Página ${currentPage} de ${cantidadTotalPaginas}`}
                 </div>
                 <div className='flex gap-5'>
-                    <button className='hover:underline hover:underline-offset-4 py-1  rounded-md'>Siguiente</button>
-                    <button className='hover:underline hover:underline-offset-4 py-1 rounded-md'>Anterior</button>
+                    <button
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className={`hover:underline hover:underline-offset-4 py-1 rounded-md ${currentPage === 1 ? 'cursor-not-allowed text-gray-500' : ''}`}
+                    >
+                        Anterior
+                    </button>
+                    <button
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === cantidadTotalPaginas}
+                        className={`hover:underline hover:underline-offset-4 py-1 rounded-md ${currentPage === cantidadTotalPaginas ? 'cursor-not-allowed text-gray-500' : ''}`}
+                    >
+                        Siguiente
+                    </button>
                 </div>
             </div>
         </div>)
